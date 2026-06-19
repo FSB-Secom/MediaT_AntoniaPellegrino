@@ -20,72 +20,49 @@
   --rm: 8px;
 }
 
-html, body {
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--bg2);
+  color: var(--text);
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* ── FOTO ── */
+.cover {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 3/4;
   overflow: hidden;
-  background: #fff;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #1a2533;
+  display: block;
 }
 
-/* ── WRAPPER DE TELAS (empilhadas verticalmente) ── */
-.deck {
-  position: fixed;
-  inset: 0;
-  overflow: hidden;
-}
-
-.screen {
-  position: absolute;
-  inset: 0;
+.cover img {
   width: 100%;
   height: 100%;
-  transition: transform .42s cubic-bezier(.77,0,.18,1);
-  will-change: transform;
-}
-
-/* estados das telas */
-.screen.prev  { transform: translateY(-100%); }
-.screen.curr  { transform: translateY(0); }
-.screen.next  { transform: translateY(100%); }
-
-/* ══════════════════════════════
-   TELA 1 — FOTO + APRESENTAÇÃO
-══════════════════════════════ */
-.s1 {
-  background: #111;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.s1-photo {
-  width: 100%;
-  height: 52dvh;
   object-fit: cover;
   object-position: center top;
   display: block;
-  flex-shrink: 0;
 }
 
 @media (min-width: 768px) {
-  .s1-photo { display: none !important; }
+  .cover { display: none !important; }
 }
 
-.s1-body {
-  flex: 1;
+/* ── APRESENTAÇÃO ── */
+.intro {
   background: var(--bg);
-  padding: 1.25rem 1.25rem 6rem;
+  padding: 1.5rem 1.25rem;
+  border-bottom: 0.5px solid var(--border);
 }
 
 .tag {
   display: inline-block;
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: .07em;
   text-transform: uppercase;
@@ -93,10 +70,10 @@ html, body {
   background: var(--blue-bg);
   padding: 3px 9px;
   border-radius: 99px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
-.s1-name {
+.intro-name {
   font-size: 22px;
   font-weight: 700;
   color: var(--text);
@@ -104,175 +81,112 @@ html, body {
   line-height: 1.3;
 }
 
-.s1-role {
+.intro-role {
   font-size: 15px;
   color: var(--blue);
   font-weight: 500;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .prose {
-  font-size: 16.5px;
+  font-size: 16px;
   color: var(--text2);
   line-height: 1.75;
   margin-bottom: 10px;
 }
 
-/* ── BOTÃO PRÓXIMA TELA (fixo no rodapé) ── */
-.fab {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  z-index: 100;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background: var(--blue);
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 18px rgba(24,95,165,.38);
-  -webkit-tap-highlight-color: transparent;
-  transition: transform .15s;
-}
-.fab:active { transform: scale(.92); }
-.fab svg { display: block; flex-shrink: 0; }
-.fab.hidden { display: none; }
-
-/* ══════════════════════
-   TELA 2 — INTRO BOX
-══════════════════════ */
-.s2 {
-  background: var(--bg);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem 1.75rem;
-  text-align: center;
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.s2-icon {
-  width: 60px; height: 60px;
-  border-radius: 50%;
+/* ── BOX INTRO ── */
+.box-intro {
   background: var(--blue-bg);
-  display: flex; align-items: center; justify-content: center;
-  margin-bottom: 1.25rem;
+  border-left: 3px solid var(--blue);
+  border-radius: 0 var(--rl) var(--rl) 0;
+  padding: 1rem 1.25rem;
+  margin: 1.25rem 1.25rem 0;
+  font-size: 16px;
+  color: var(--text);
+  line-height: 1.7;
+  font-style: italic;
 }
 
-.s2-label {
-  font-size: 17px; font-weight: 700;
-  letter-spacing: .07em; text-transform: uppercase;
-  color: var(--blue); margin-bottom: 14px;
-}
-
-.s2-text {
-  font-size: 22px; font-weight: 500;
-  color: var(--text); line-height: 1.55;
-  margin-bottom: 2.25rem;
-}
-
-.btn-primary {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: var(--blue); color: #fff;
-  font-size: 17px; font-weight: 600; font-family: inherit;
-  padding: 13px 26px; border-radius: 99px; border: none;
-  cursor: pointer;
-  box-shadow: 0 4px 16px rgba(24,95,165,.3);
-  -webkit-tap-highlight-color: transparent;
-  transition: opacity .15s;
-  margin-bottom: .75rem;
-}
-.btn-primary:active { opacity: .85; }
-
-.btn-ghost {
-  background: none; border: none;
-  font-size: 16px; color: var(--text2);
-  cursor: pointer; font-family: inherit;
-  padding: 8px; margin-top: 4px;
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* ══════════════════════════
-   TELA 3 — GUIA (SCROLLÁVEL)
-══════════════════════════ */
-/* S3 */
-.s3 {
-  background: var(--bg2);
-  position: absolute;
-  inset: 0;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-.s3-top {
+/* ── STICKY HEADER ── */
+.sticky-header {
   position: sticky;
   top: 0;
-  z-index: 5;
+  z-index: 20;
   background: var(--bg);
   border-bottom: 0.5px solid var(--border);
 }
 
-/* barra de progresso */
 .prog-row {
-  display: flex; align-items: center; gap: 8px;
-  padding: .75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: .85rem 1.25rem;
 }
 
 .prog-bar {
   flex: 1; height: 3px;
-  background: var(--border); border-radius: 99px; overflow: hidden;
+  background: var(--border);
+  border-radius: 99px;
+  overflow: hidden;
 }
 
 .prog-fill {
-  height: 100%; background: var(--blue);
-  border-radius: 99px; width: 0%;
+  height: 100%;
+  background: var(--blue);
+  border-radius: 99px;
+  width: 0%;
   transition: width .3s ease;
 }
 
 .prog-pct {
-  font-size: 17px; font-weight: 700;
-  color: var(--blue); min-width: 30px; text-align: right;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--blue);
+  min-width: 34px;
+  text-align: right;
 }
 
-/* filtros */
 .tabs {
-  display: flex; gap: 0;
+  display: flex;
   padding: .6rem 1.25rem;
-  overflow-x: auto; scrollbar-width: none;
+  overflow-x: auto;
+  scrollbar-width: none;
   border-top: 0.5px solid var(--border);
+  gap: 0;
 }
 .tabs::-webkit-scrollbar { display: none; }
 
 .tab {
   flex-shrink: 0;
-  font-size: 15px; font-family: inherit;
-  padding: 5px 11px; border-radius: 99px;
+  font-size: 15px;
+  font-family: inherit;
+  padding: 6px 13px;
+  border-radius: 99px;
   border: 0.5px solid var(--border);
-  background: transparent; color: var(--text2);
-  cursor: pointer; margin-right: 6px;
+  background: transparent;
+  color: var(--text2);
+  cursor: pointer;
+  margin-right: 6px;
   white-space: nowrap;
   transition: all .15s;
   -webkit-tap-highlight-color: transparent;
 }
 .tab.active {
-  background: var(--blue-bg); color: var(--blue);
-  border-color: transparent; font-weight: 700;
+  background: var(--blue-bg);
+  color: var(--blue);
+  border-color: transparent;
+  font-weight: 700;
 }
 
-/* área de cards */
-.cards-wrap {
-  padding: 1rem 1.25rem 1.5rem;
-  display: flex; flex-direction: column; gap: 12px;
+/* ── CARDS ── */
+.cards {
+  padding: 1rem 1.25rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-/* cards */
 .card {
   background: var(--bg);
   border: 0.5px solid var(--border);
@@ -284,39 +198,52 @@ html, body {
 .card.open { border-color: var(--border2); }
 
 .card-head {
-  display: flex; align-items: center; gap: 12px;
-  padding: 14px 16px; cursor: pointer; user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 16px;
+  cursor: pointer;
+  user-select: none;
 }
 
 .card-num {
-  width: 32px; height: 32px; border-radius: 50%;
+  width: 36px; height: 36px;
+  border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 16px; font-weight: 700; flex-shrink: 0;
+  font-size: 15px; font-weight: 700;
+  flex-shrink: 0;
 }
 
 .card-info { flex: 1; min-width: 0; }
 
 .card-title {
-  font-size: 17px; font-weight: 500;
-  color: var(--text); line-height: 1.35;
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.35;
 }
 
-.card-tag { font-size: 17px; color: var(--text2); margin-top: 2px; }
+
 
 .chevron {
-  color: var(--text2); font-size: 21px; line-height: 1;
-  flex-shrink: 0; transition: transform .2s;
+  color: var(--text2);
+  font-size: 20px;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: transform .2s;
 }
 .card.open .chevron { transform: rotate(180deg); }
 
 .card-body { display: none; padding: 0 16px 16px; }
 .card.open .card-body { display: block; }
 
-.divider { height: .5px; background: var(--border); margin-bottom: 12px; }
+.divider { height: .5px; background: var(--border); margin-bottom: 14px; }
 
 .card-body p {
-  font-size: 16px; color: var(--text2);
-  line-height: 1.72; margin-bottom: 10px;
+  font-size: 16px;
+  color: var(--text2);
+  line-height: 1.75;
+  margin-bottom: 12px;
 }
 .card-body p:last-child { margin-bottom: 0; }
 
@@ -324,136 +251,84 @@ html, body {
   background: var(--bg2);
   border-left: 2.5px solid var(--blue);
   border-radius: 0 var(--rm) var(--rm) 0;
-  padding: 10px 12px;
-  margin: 10px 0 0;
-  font-size: 15.5px; font-style: italic;
-  color: var(--text); line-height: 1.65;
+  padding: 12px 14px;
+  margin: 12px 0 0;
+  font-size: 15px;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.7;
 }
 
-/* footer */
-.footer-wrap { padding: 0 1.25rem 1.5rem; flex-shrink: 0; }
+/* ── FOOTER ── */
+.footer {
+  padding: 0 1.25rem 2rem;
+}
 
 .footer-card {
   background: var(--bg);
   border: 0.5px solid var(--border);
   border-radius: var(--rl);
-  padding: 13px 15px;
-  display: flex; align-items: center; gap: 12px;
+  padding: 15px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
+
 .footer-card p { font-size: 15px; color: var(--text2); line-height: 1.5; }
 .footer-card a { color: var(--blue); text-decoration: none; }
 
-/* ── BOTÃO VOLTAR AO INÍCIO (tela 3) ── */
-.back-home {
-  display: flex; align-items: center; gap: 6px;
-  background: none; border: 0.5px solid var(--border);
-  border-radius: 99px;
-  font-size: 15px; color: var(--text2); font-family: inherit;
-  padding: 7px 14px; cursor: pointer; margin: 0 1.25rem 1rem;
-  flex-shrink: 0;
-  -webkit-tap-highlight-color: transparent;
-  transition: border-color .15s;
-}
-.back-home:active { border-color: var(--border2); }
+a { color: var(--blue); }
 </style>
 </head>
 <body>
 
-<div class="deck">
-
-  <!-- ══ TELA 1: FOTO + APRESENTAÇÃO ══ -->
-  <div class="screen curr" id="s1">
-    <div class="s1">
-      <img class="s1-photo" src="antonia.jpeg" alt="Antonia Pellegrino">
-      <div class="s1-body">
-        <span class="tag">EBC · Comunicação Estratégica</span>
-        <div class="s1-name">Antonia Pellegrino</div>
-        <div class="s1-role">Presidenta da Empresa Brasil de Comunicação (EBC)</div>
-        <p class="prose">Reconhecida pela sua extensa trajetória no audiovisual, Antonia é gestora cultural, roteirista, produtora e defensora dos direitos das mulheres. Em abril de 2026, assumiu a presidência da Empresa Brasil de Comunicação — EBC, após três anos à frente da Diretoria de Conteúdo e Programação da empresa.</p>
-        <p class="prose">Sua expertise combina audiovisual de grande alcance, pautas de diversidade e gênero, gestão de conteúdo e defesa do fortalecimento da comunicação pública.</p>
-        <p class="prose">Este guia contém orientações básicas de apoio à produção de entrevistas e presença em redes sociais. Os temas aqui mencionados já foram explorados durante encontro com Antonia, na sede da FSB Holding.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══ TELA 2: INTRO BOX ══ -->
-  <div class="screen next" id="s2">
-    <div class="s2">
-      <div class="s2-icon">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
-        </svg>
-      </div>
-      <div class="s2-label">Sobre este guia</div>
-      <p class="s2-text">O material traz 10 pontos sugestivos para fortalecer presença, gerar consistência no discurso e gerenciar eventuais crises de reputação institucional.</p>
-      <button class="btn-primary" onclick="goTo(2)">
-        Acessar o guia
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="6,3 11,8 6,13"/>
-        </svg>
-      </button>
-      <button class="btn-ghost" onclick="goTo(0)">← Voltar</button>
-    </div>
-  </div>
-
-  <!-- ══ TELA 3: GUIA ══ -->
-  <div class="screen next" id="s3">
-    <div class="s3">
-      <div class="s3-top">
-        <div class="prog-row">
-          <div class="prog-bar"><div class="prog-fill" id="prog"></div></div>
-          <span class="prog-pct" id="pct">0%</span>
-        </div>
-        <div class="tabs">
-          <button class="tab active" onclick="filterCat('all',this)">Todos</button>
-          <button class="tab" onclick="filterCat('discurso',this)">Discurso</button>
-          <button class="tab" onclick="filterCat('postura',this)">Postura</button>
-          <button class="tab" onclick="filterCat('digital',this)">Digital</button>
-          <button class="tab" onclick="filterCat('gestao',this)">Gestão</button>
-        </div>
-      </div>
-
-      <div class="cards-wrap" id="cards"></div>
-
-      <button class="back-home" onclick="goTo(0)">
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="10,13 5,8 10,3"/>
-        </svg>
-        Voltar ao início
-      </button>
-
-      <div class="footer-wrap">
-        <div class="footer-card">
-          <span style="font-size:20px;flex-shrink:0">🎬</span>
-          <p>A abordagem em formato de entrevista para TV foi gravada e está disponível no <a href="https://drive.google.com/file/d/1I3X4CjQRk8NdZe2m2QHiswouA0ntxCfF/view" target="_blank">Drive da FSB</a>.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
+<!-- FOTO -->
+<div class="cover">
+  <img src="antonia.jpg" alt="Antonia Pellegrino">
 </div>
 
-<!-- FAB: só visível na tela 1 -->
-<button class="fab" id="fab" onclick="goTo(1)" aria-label="Próxima tela">
-  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-    <polyline points="4,8 11,15 18,8"/>
-  </svg>
-</button>
+<!-- APRESENTAÇÃO -->
+<div class="intro">
+  <span class="tag">EBC · Comunicação Estratégica</span>
+  <div class="intro-name">Antonia Pellegrino</div>
+  <div class="intro-role">Presidenta da Empresa Brasil de Comunicação (EBC)</div>
+  <p class="prose">Reconhecida pela sua extensa trajetória no audiovisual, Antonia é gestora cultural, roteirista, produtora e defensora dos direitos das mulheres. Em abril de 2026, assumiu a presidência da Empresa Brasil de Comunicação — EBC, após três anos à frente da Diretoria de Conteúdo e Programação da empresa.</p>
+  <p class="prose">Sua expertise combina audiovisual de grande alcance, pautas de diversidade e gênero, gestão de conteúdo e defesa do fortalecimento da comunicação pública.</p>
+  <p class="prose">Este guia contém orientações básicas de apoio à produção de entrevistas e presença em redes sociais. Os temas aqui mencionados já foram explorados durante encontro com Antonia, na sede da FSB Holding.</p>
+</div>
+
+<!-- BOX INTRO -->
+<div class="box-intro">
+  O material traz 10 pontos sugestivos para fortalecer presença, gerar consistência no discurso e gerenciar eventuais crises de reputação institucional.
+</div>
+
+<!-- STICKY: PROGRESSO + FILTROS -->
+<div class="sticky-header" style="margin-top: 1.25rem;">
+  <div class="prog-row">
+    <div class="prog-bar"><div class="prog-fill" id="prog"></div></div>
+    <span class="prog-pct" id="pct">0%</span>
+  </div>
+  <div class="tabs">
+    <button class="tab active" onclick="filterCat('all',this)">Todos</button>
+    <button class="tab" onclick="filterCat('discurso',this)">Discurso</button>
+    <button class="tab" onclick="filterCat('postura',this)">Postura</button>
+    <button class="tab" onclick="filterCat('digital',this)">Digital</button>
+    <button class="tab" onclick="filterCat('gestao',this)">Gestão</button>
+  </div>
+</div>
+
+<!-- CARDS -->
+<div class="cards" id="cards"></div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-card">
+    <span style="font-size:22px;flex-shrink:0">🎬</span>
+    <p>A abordagem em formato de entrevista para TV foi gravada e está disponível para consulta no <a href="https://drive.google.com/file/d/1I3X4CjQRk8NdZe2m2QHiswouA0ntxCfF/view" target="_blank">Drive da FSB</a>.</p>
+  </div>
+</div>
 
 <script>
-const screens = ['s1','s2','s3'];
-let cur = 0;
-
-function goTo(n) {
-  const els = screens.map(id => document.getElementById(id));
-  els.forEach((el, i) => {
-    el.className = 'screen ' + (i < n ? 'prev' : i === n ? 'curr' : 'next');
-  });
-  cur = n;
-  document.getElementById('fab').classList.toggle('hidden', n !== 0);
-}
-
-/* ── DADOS ── */
 const data = [
   {
     num:1, cat:"discurso", color:"#E6F1FB", tc:"#0C447C",
@@ -465,7 +340,7 @@ const data = [
       "Os recursos destinados à EBC constam em dados públicos de transparência. Por isso, quando questionada sobre o orçamento destinado à EBC, você não precisa esmiuçar sobre valores que estão disponíveis à pesquisa de qualquer cidadão. Inverta a lógica da pergunta e convide o público para uma reflexão:"
     ],
     quotes:["Eu te devolvo a pergunta: o quanto vale para o Brasil não dispor de uma estrutura pública de comunicação?"],
-    mid: null, after:[]
+    mid:null, after:[]
   },
   {
     num:2, cat:"discurso", color:"#E6F1FB", tc:"#0C447C",
@@ -531,10 +406,10 @@ const data = [
     tag:"Gestão · Reputação",
     title:"Reforce a imagem reputacional a partir das entregas da gestão",
     body:[
-      "Desde sua chegada à presidência da EBC, a exposição da empresa na imprensa tem sido majoritariamente positiva, impulsionada principalmente por duas agendas: o lançamento do <strong>Tela Brasil</strong> e o protagonismo da EBC nos testes da <strong>TV 3.0</strong>.<br><br>🔗 <a href='https://drive.google.com/file/d/1Eae1uXjiOq22rRGZsLEChTA0BqXtqiTL/view?usp=sharing' target='_blank' style='color:#185FA5'>Conheça aqui os dados coletados neste período.</a>",
+      "Desde sua chegada à presidência da EBC, a exposição da empresa na imprensa tem sido majoritariamente positiva, impulsionada principalmente por duas agendas: o lançamento do <strong>Tela Brasil</strong> e o protagonismo da EBC nos testes da <strong>TV 3.0</strong>.<br><br>🔗 <a href='https://drive.google.com/file/d/1Eae1uXjiOq22rRGZsLEChTA0BqXtqiTL/view?usp=sharing' target='_blank'>Conheça aqui os dados coletados neste período.</a>",
       "O Tela Brasil reforça a associação da empresa com acesso gratuito à produção nacional, valorização da cultura brasileira e fortalecimento do audiovisual independente. Já a TV 3.0 posiciona a EBC como agente de inovação no sistema público de comunicação, conectando TV aberta, plataformas digitais e serviços públicos.",
       "Essas entregas devem ser usadas para consolidar sua imagem como gestora capaz de combinar visão política, modernização tecnológica e fortalecimento da comunicação pública. Nas redes, onde ainda há ataques sobre suposto apadrinhamento político ou viés ideológico, a melhor resposta é reforçar resultados concretos e o papel estratégico da EBC para a sociedade.",
-      "Acompanhar os conteúdos abordados pela mídia ajuda a calibrar tendências que podem ser incorporadas à comunicação, prevendo eventuais crises que resvalem na comunicação pública, especialmente em um ano eleitoral.<br><br>🔗 <a href='https://drive.google.com/file/d/1SQx-WeBBJAPhVkBDLp1wRcxyfPWWGds4/view?usp=sharing' target='_blank' style='color:#185FA5'>Esta apresentação menciona alguns temas de destaque para o período.</a>"
+      "Acompanhar os conteúdos abordados pela mídia ajuda a calibrar tendências que podem ser incorporadas à comunicação, prevendo eventuais crises que resvalem na comunicação pública, especialmente em um ano eleitoral.<br><br>🔗 <a href='https://drive.google.com/file/d/1SQx-WeBBJAPhVkBDLp1wRcxyfPWWGds4/view?usp=sharing' target='_blank'>Esta apresentação menciona alguns temas de destaque para o período.</a>"
     ],
     quotes:[], mid:null, after:[]
   },
@@ -545,7 +420,7 @@ const data = [
     body:[
       "Dê atenção estratégica ao LinkedIn, com publicações técnicas, vídeos curtos e textos analíticos sobre comunicação pública, cultura, inovação, democracia e os rumos da EBC. Mantenha a biografia atualizada, consistente e robusta, já que a plataforma é uma das principais referências utilizadas por mecanismos de busca e ferramentas de IA para consolidar informações sobre perfis públicos. Sua trajetória desperta interesse, e há expectativa sobre sua visão, suas prioridades e o caminho que sua gestão pretende imprimir à EBC.",
       "As redes sociais, há muito, deixaram de ser um instrumento de interação e se tornaram uma grande vitrine de entregas pessoais e institucionais. Segundo dados recentes do We Are Social/Meltwater, 88,1% da população brasileira está conectada às plataformas digitais, cujo uso diário supera 8 horas diárias.",
-      "Para além do seu engajamento que está num bom patamar (1,25%), é necessário incorporar fórmulas que comprovadamente funcionam.<br><br>🔗 <a href='https://drive.google.com/file/d/1BNxBTeZKiJQGklMaXNI2BiwA0a2BEV_W/view?usp=sharing' target='_blank' style='color:#185FA5'>Você pode revisitar o material aqui.</a>"
+      "Para além do seu engajamento que está num bom patamar (1,25%), é necessário incorporar fórmulas que comprovadamente funcionam.<br><br>🔗 <a href='https://drive.google.com/file/d/1BNxBTeZKiJQGklMaXNI2BiwA0a2BEV_W/view?usp=sharing' target='_blank'>Você pode revisitar o material aqui.</a>"
     ],
     quotes:[], mid:null, after:[]
   },
@@ -575,14 +450,14 @@ const opened = new Set();
 function buildBody(item) {
   let h = '<div class="divider"></div>';
   if (item.num === 2) {
-    h += item.body.map(p=>`<p>${p}</p>`).join('');
+    h += item.body.map(p => `<p>${p}</p>`).join('');
     h += `<div class="quote">"${item.quotes[0]}"</div>`;
-    h += `<p style="margin-top:10px">${item.mid}</p>`;
-    h += `<div class="quote" style="margin-top:10px">"${item.quotes[1]}"</div>`;
+    h += `<p style="margin-top:12px">${item.mid}</p>`;
+    h += `<div class="quote" style="margin-top:12px">"${item.quotes[1]}"</div>`;
   } else {
-    h += item.body.map(p=>`<p>${p}</p>`).join('');
+    h += item.body.map(p => `<p>${p}</p>`).join('');
     item.quotes.forEach(q => { h += `<div class="quote">"${q}"</div>`; });
-    item.after.forEach(p => { h += `<p style="margin-top:10px">${p}</p>`; });
+    item.after.forEach(p => { h += `<p style="margin-top:12px">${p}</p>`; });
   }
   return h;
 }
@@ -599,8 +474,8 @@ function renderCards(cat) {
       <div class="card-head" onclick="toggle(${item.num})">
         <div class="card-num" style="background:${item.color};color:${item.tc}">${item.num}</div>
         <div class="card-info">
-  <div class="card-title">${item.title}</div>
-</div>
+          <div class="card-title">${item.title}</div>
+        </div>
         <span class="chevron">&#8964;</span>
       </div>
       <div class="card-body">${buildBody(item)}</div>`;
