@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Guia de Bolso — EBC</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #fff;
+  --bg2: #f4f4f4;
+  --text: #111;
+  --text2: #555;
+  --border: rgba(0,0,0,0.11);
+  --border2: rgba(0,0,0,0.22);
+  --blue: #185FA5;
+  --blue-bg: #e6f1fb;
+  --rl: 12px;
+  --rm: 8px;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* ── WRAPPER DE TELAS (empilhadas verticalmente) ── */
+.deck {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform .42s cubic-bezier(.77,0,.18,1);
+  will-change: transform;
+}
+
+/* estados das telas */
+.screen.prev  { transform: translateY(-100%); }
+.screen.curr  { transform: translateY(0); }
+.screen.next  { transform: translateY(100%); }
+
+/* ══════════════════════════════
+   TELA 1 — FOTO + APRESENTAÇÃO
+══════════════════════════════ */
+.s1 {
+  background: #111;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.s1-photo {
+  width: 100%;
+  height: 52dvh;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  flex-shrink: 0;
+}
+
+.s1-body {
+  flex: 1;
+  background: var(--bg);
+  padding: 1.25rem 1.25rem 6rem;
+}
+
+.tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--blue);
+  background: var(--blue-bg);
+  padding: 3px 9px;
+  border-radius: 99px;
+  margin-bottom: 10px;
+}
+
+.s1-name {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 3px;
+  line-height: 1.3;
+}
+
+.s1-role {
+  font-size: 12px;
+  color: var(--blue);
+  font-weight: 500;
+  margin-bottom: 14px;
+}
+
+.prose {
+  font-size: 13.5px;
+  color: var(--text2);
+  line-height: 1.75;
+  margin-bottom: 10px;
+}
+
+/* ── BOTÃO PRÓXIMA TELA (fixo no rodapé) ── */
+.fab {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 100;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--blue);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 18px rgba(24,95,165,.38);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .15s;
+}
+.fab:active { transform: scale(.92); }
+.fab svg { display: block; flex-shrink: 0; }
+.fab.hidden { display: none; }
+
+/* ══════════════════════
+   TELA 2 — INTRO BOX
+══════════════════════ */
+.s2 {
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.75rem;
+  text-align: center;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.s2-icon {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: var(--blue-bg);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.s2-label {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 14px;
+}
+
+.s2-text {
+  font-size: 19px; font-weight: 500;
+  color: var(--text); line-height: 1.55;
+  margin-bottom: 2.25rem;
+}
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--blue); color: #fff;
+  font-size: 14px; font-weight: 600; font-family: inherit;
+  padding: 13px 26px; border-radius: 99px; border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(24,95,165,.3);
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity .15s;
+  margin-bottom: .75rem;
+}
+.btn-primary:active { opacity: .85; }
+
+.btn-ghost {
+  background: none; border: none;
+  font-size: 13px; color: var(--text2);
+  cursor: pointer; font-family: inherit;
+  padding: 8px; margin-top: 4px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ══════════════════════════
+   TELA 3 — GUIA (SCROLLÁVEL)
+══════════════════════════ */
+/* S3 */
+.s3 {
+  background: var(--bg2);
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.s3-top {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--bg);
+  border-bottom: 0.5px solid var(--border);
+}
+
+/* barra de progresso */
+.prog-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: .75rem 1.25rem;
+}
+
+.prog-bar {
+  flex: 1; height: 3px;
+  background: var(--border); border-radius: 99px; overflow: hidden;
+}
+
+.prog-fill {
+  height: 100%; background: var(--blue);
+  border-radius: 99px; width: 0%;
+  transition: width .3s ease;
+}
+
+.prog-pct {
+  font-size: 11px; font-weight: 700;
+  color: var(--blue); min-width: 30px; text-align: right;
+}
+
+/* filtros */
+.tabs {
+  display: flex; gap: 0;
+  padding: .6rem 1.25rem;
+  overflow-x: auto; scrollbar-width: none;
+  border-top: 0.5px solid var(--border);
+}
+.tabs::-webkit-scrollbar { display: none; }
+
+.tab {
+  flex-shrink: 0;
+  font-size: 12px; font-family: inherit;
+  padding: 5px 11px; border-radius: 99px;
+  border: 0.5px solid var(--border);
+  background: transparent; color: var(--text2);
+  cursor: pointer; margin-right: 6px;
+  white-space: nowrap;
+  transition: all .15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.tab.active {
+  background: var(--blue-bg); color: var(--blue);
+  border-color: transparent; font-weight: 700;
+}
+
+/* área de cards */
+.cards-wrap {
+  padding: 1rem 1.25rem 1.5rem;
+  display: flex; flex-direction: column; gap: 12px;
+}
+
+/* cards */
+.card {
+  background: var(--bg);
+  border: 0.5px solid var(--border);
+  border-radius: var(--rl);
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color .15s;
+}
+.card.open { border-color: var(--border2); }
+
+.card-head {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px; cursor: pointer; user-select: none;
+}
+
+.card-num {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; flex-shrink: 0;
+}
+
+.card-info { flex: 1; min-width: 0; }
+
+.card-title {
+  font-size: 14px; font-weight: 500;
+  color: var(--text); line-height: 1.35;
+}
+
+.card-tag { font-size: 11px; color: var(--text2); margin-top: 2px; }
+
+.chevron {
+  color: var(--text2); font-size: 18px; line-height: 1;
+  flex-shrink: 0; transition: transform .2s;
+}
+.card.open .chevron { transform: rotate(180deg); }
+
+.card-body { display: none; padding: 0 16px 16px; }
+.card.open .card-body { display: block; }
+
+.divider { height: .5px; background: var(--border); margin-bottom: 12px; }
+
+.card-body p {
+  font-size: 13px; color: var(--text2);
+  line-height: 1.72; margin-bottom: 10px;
+}
+.card-body p:last-child { margin-bottom: 0; }
+
+.quote {
+  background: var(--bg2);
+  border-left: 2.5px solid var(--blue);
+  border-radius: 0 var(--rm) var(--rm) 0;
+  padding: 10px 12px;
+  margin: 10px 0 0;
+  font-size: 12.5px; font-style: italic;
+  color: var(--text); line-height: 1.65;
+}
+
+/* footer */
+.footer-wrap { padding: 0 1.25rem 1.5rem; flex-shrink: 0; }
+
+.footer-card {
+  background: var(--bg);
+  border: 0.5px solid var(--border);
+  border-radius: var(--rl);
+  padding: 13px 15px;
+  display: flex; align-items: center; gap: 12px;
+}
+.footer-card p { font-size: 12px; color: var(--text2); line-height: 1.5; }
+.footer-card a { color: var(--blue); text-decoration: none; }
+
+/* ── BOTÃO VOLTAR AO INÍCIO (tela 3) ── */
+.back-home {
+  display: flex; align-items: center; gap: 6px;
+  background: none; border: 0.5px solid var(--border);
+  border-radius: 99px;
+  font-size: 12px; color: var(--text2); font-family: inherit;
+  padding: 7px 14px; cursor: pointer; margin: 0 1.25rem 1rem;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color .15s;
+}
+.back-home:active { border-color: var(--border2); }
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+  <!-- ══ TELA 1: FOTO + APRESENTAÇÃO ══ -->
+  <div class="screen curr" id="s1">
+    <div class="s1">
+      <img class="s1-photo" src="antonia.jpeg" alt="Antonia Pellegrino">
+      <div class="s1-body">
+        <span class="tag">EBC · Comunicação Estratégica</span>
+        <div class="s1-name">Antonia Pellegrino</div>
+        <div class="s1-role">Presidenta da Empresa Brasil de Comunicação (EBC)</div>
+        <p class="prose">Reconhecida pela sua extensa trajetória no audiovisual, Antonia é gestora cultural, roteirista, produtora e defensora dos direitos das mulheres. Em abril de 2026, assumiu a presidência da Empresa Brasil de Comunicação — EBC, após três anos à frente da Diretoria de Conteúdo e Programação da empresa.</p>
+        <p class="prose">Sua expertise combina audiovisual de grande alcance, pautas de diversidade e gênero, gestão de conteúdo e defesa do fortalecimento da comunicação pública.</p>
+        <p class="prose">Este guia contém orientações básicas de apoio à produção de entrevistas e presença em redes sociais. Os temas aqui mencionados já foram explorados durante encontro com Antonia, na sede da FSB Holding.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TELA 2: INTRO BOX ══ -->
+  <div class="screen next" id="s2">
+    <div class="s2">
+      <div class="s2-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#185FA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
+        </svg>
+      </div>
+      <div class="s2-label">Sobre este guia</div>
+      <p class="s2-text">O material traz 10 pontos sugestivos para fortalecer presença, gerar consistência no discurso e gerenciar eventuais crises de reputação institucional.</p>
+      <button class="btn-primary" onclick="goTo(2)">
+        Acessar o guia
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6,3 11,8 6,13"/>
+        </svg>
+      </button>
+      <button class="btn-ghost" onclick="goTo(0)">← Voltar</button>
+    </div>
+  </div>
+
+  <!-- ══ TELA 3: GUIA ══ -->
+  <div class="screen next" id="s3">
+    <div class="s3">
+      <div class="s3-top">
+        <div class="prog-row">
+          <div class="prog-bar"><div class="prog-fill" id="prog"></div></div>
+          <span class="prog-pct" id="pct">0%</span>
+        </div>
+        <div class="tabs">
+          <button class="tab active" onclick="filterCat('all',this)">Todos</button>
+          <button class="tab" onclick="filterCat('discurso',this)">Discurso</button>
+          <button class="tab" onclick="filterCat('postura',this)">Postura</button>
+          <button class="tab" onclick="filterCat('digital',this)">Digital</button>
+          <button class="tab" onclick="filterCat('gestao',this)">Gestão</button>
+        </div>
+      </div>
+
+      <div class="cards-wrap" id="cards"></div>
+
+      <button class="back-home" onclick="goTo(0)">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="10,13 5,8 10,3"/>
+        </svg>
+        Voltar ao início
+      </button>
+
+      <div class="footer-wrap">
+        <div class="footer-card">
+          <span style="font-size:20px;flex-shrink:0">🎬</span>
+          <p>A abordagem em formato de entrevista para TV foi gravada e está disponível no <a href="https://drive.google.com/file/d/1I3X4CjQRk8NdZe2m2QHiswouA0ntxCfF/view" target="_blank">Drive da FSB</a>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FAB: só visível na tela 1 -->
+<button class="fab" id="fab" onclick="goTo(1)" aria-label="Próxima tela">
+  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="4,8 11,15 18,8"/>
+  </svg>
+</button>
+
+<script>
+const screens = ['s1','s2','s3'];
+let cur = 0;
+
+function goTo(n) {
+  const els = screens.map(id => document.getElementById(id));
+  els.forEach((el, i) => {
+    el.className = 'screen ' + (i < n ? 'prev' : i === n ? 'curr' : 'next');
+  });
+  cur = n;
+  document.getElementById('fab').classList.toggle('hidden', n !== 0);
+}
+
+/* ── DADOS ── */
+const data = [
+  {
+    num:1, cat:"discurso", color:"#E6F1FB", tc:"#0C447C",
+    tag:"Argumentação · Orçamento",
+    title:"1- Incite a reflexão sobre o valor e o custo da EBC",
+    body:[
+      "Diante de questionamentos sobre o orçamento destinado à empresa, mude a perspectiva trazendo a reflexão sobre qual seria o preço para o país de não ter uma estrutura pública de comunicação e cultura que chega a locais onde a mídia comercial não alcança.",
+      "Aqui, aposte em destrinchar aquilo que você domina muito bem: o alcance e a relevância da EBC. Esta é uma empresa que leva informação aos rincões onde a mídia tradicional não vai, emprega diretamente cerca de 400 profissionais de comunicação e se empenha diariamente a alavancar o audiovisual brasileiro.",
+      "Os recursos destinados à EBC constam em dados públicos de transparência. Por isso, quando questionada sobre o orçamento destinado à EBC, você não precisa esmiuçar sobre valores que estão disponíveis à pesquisa de qualquer cidadão. Inverta a lógica da pergunta e convide o público para uma reflexão:"
+    ],
+    quotes:["Eu te devolvo a pergunta: o quanto vale para o Brasil não dispor de uma estrutura pública de comunicação?"],
+    mid: null, after:[]
+  },
+  {
+    num:2, cat:"discurso", color:"#E6F1FB", tc:"#0C447C",
+    tag:"Argumentação · Contratações",
+    title:"2 - Atuação de profissionais de mercado na EBC",
+    body:[
+      "Defenda a EBC como um player competitivo que disputa talentos e insumos na área de comunicação. O caráter público é evidenciado na legalidade e transparência de todas as contratações realizadas pela EBC.",
+      "Se perguntada sobre o custo elevado das contratações de apresentadores, prefira posicionar a EBC no mercado da comunicação, como:"
+    ],
+    quotes:[
+      "A EBC não é uma ilha; ela está em um mercado competitivo que disputa materiais e talentos. Para cumprir nossos objetivos de comunicação e atrair relevância e público, buscamos um quadro enxuto, mas que opere dentro da realidade desse mercado. Todas as nossas contratações seguem estritamente as normas, regulamentos e critérios de legalidade disponíveis na transparência pública.",
+      "Estamos falando de profissionais de enorme valor no mercado. Seria um privilégio para a EBC contar com talentos desse porte em nossos quadros, mas, por questões de adequação orçamentária e viabilidade do plano de trabalho atual, não conseguimos avançar no momento. A EBC segue sempre em busca de talentos respeitando seus limites fiscais."
+    ],
+    mid:"Ainda em resposta a provocações que exponham profissionais contratados ou cogitados para integrar o quadro da EBC, como no caso da gestão anterior, escolha uma saída diplomática que proteja a reputação dos profissionais e da empresa. Este é um exemplo:",
+    after:[]
+  },
+  {
+    num:3, cat:"postura", color:"#E1F5EE", tc:"#085041",
+    tag:"Presença · Linguagem corporal",
+    title:"3 - Postura e linguagem",
+    body:[
+      "Use o sorriso, o dinamismo das mãos e uma postura relaxada a seu favor. Elementos de leveza e simpatia transmitem o capital de serviço de uma liderança feminina moderna, gerando conexão imediata com o público.",
+      "Mantenha uma postura ereta e expresse com clareza e confiança. O rosto deve transmitir seriedade, engajamento e empatia. Quando houver um assunto mais leve, sorria, coloque adjetivos positivos para aproximar.",
+      "Diante de temas sensíveis ou provocações, use pausas estratégicas antes de iniciar suas respostas para controlar o ritmo da conversa, evitando que o dinamismo ou a pressa do repórter induzam a falas apressadas.",
+      "Democratize a informação e traduza conceitos abstratos ou técnicos em histórias simples e diretas sobre o papel da EBC. Evite minúcias orçamentárias ou explicações jurídicas complexas que dispersam a atenção do telespectador."
+    ],
+    quotes:[], mid:null, after:[]
+  },
+  {
+    num:4, cat:"discurso", color:"#E6F1FB", tc:"#0C447C",
+    tag:"Argumentação · Gênero",
+    title:"4 - Levante a perspectiva de gênero",
+    body:[
+      "Neutralize provocações de cunho pessoal ou sobre indicações políticas, devolvendo uma reflexão elegante ao entrevistador, exaltando a legitimidade do seu próprio currículo e o espaço das mulheres no mercado de trabalho público ou privado.",
+      "Uma parte da mídia sugeriu que a sua ascensão ao posto de presidente da EBC ocorreu em função de sua relação com a primeira-dama. Para evitar ruídos, aconselha-se não assumir uma postura reativa. Prefira argumentar utilizando um tema confortável para você, como a defesa do seu currículo e da ascensão das mulheres em ambientes de poder:"
+    ],
+    quotes:["Pelo fato de ser mulher, eu preciso sempre de uma indicação? O meu currículo e o meu trabalho técnico de anos no audiovisual não bastam? Reduzir a presença de uma profissional qualificada a uma mera indicação política é uma injustiça comigo e com a capacidade de todas as mulheres."],
+    mid:null,
+    after:["Essa também é uma oportunidade para elencar sua larga contribuição para o audiovisual brasileiro e a comunicação pública. O seu currículo desarma qualquer insinuação de protecionismo."]
+  },
+  {
+    num:5, cat:"discurso", color:"#E6F1FB", tc:"#0C447C",
+    tag:"Argumentação · Pautas",
+    title:"5 - Abrace as pautas de consenso",
+    body:[
+      "Explore temas capazes de aproximar a sociedade para além da polarização ideológica. Defesa da infância, apoio às famílias, combate à violência contra a mulher, educação e acesso à informação são agendas de alto valor público e forte conexão social.",
+      "Sempre que possível, relacione essas pautas ao serviço concreto que uma empresa pública de comunicação pode prestar à população. A EBC pode se posicionar como fonte útil e confiável em temas do cotidiano, como Enem, Fies, Prouni, Sisu, proteção de crianças e adolescentes no ambiente digital e orientação cidadã sobre políticas públicas."
+    ],
+    quotes:[], mid:null, after:[]
+  },
+  {
+    num:6, cat:"gestao", color:"#FAEEDA", tc:"#633806",
+    tag:"Gestão · Resultados",
+    title:"6 - Use exemplos práticos de sucesso",
+    body:[
+      "Valorize a sua trajetória no audiovisual e conecte essa experiência ao papel da EBC no fortalecimento da cultura brasileira. O bom momento do cinema nacional, com reconhecimento em premiações e maior visibilidade internacional, pode ser usado como exemplo da potência criativa do país e da importância de ampliar o acesso da população a esse conteúdo.",
+      "A mensagem central deve ser que a EBC não substitui o mercado, mas pode atuar como indutora, parceira e plataforma de difusão da produção nacional, contribuindo para valorizar talentos brasileiros, fortalecer a economia criativa e distribuir cultura gratuitamente à sociedade."
+    ],
+    quotes:[], mid:null, after:[]
+  },
+  {
+    num:7, cat:"gestao", color:"#FAEEDA", tc:"#633806",
+    tag:"Gestão · Reputação",
+    title:"7. Reforce a imagem reputacional a partir das entregas da gestão",
+    body:[
+      "Desde sua chegada à presidência da EBC, a exposição da empresa na imprensa tem sido majoritariamente positiva, impulsionada principalmente por duas agendas: o lançamento do <strong>Tela Brasil</strong> e o protagonismo da EBC nos testes da <strong>TV 3.0</strong>.",
+      "O Tela Brasil reforça a associação da empresa com acesso gratuito à produção nacional, valorização da cultura brasileira e fortalecimento do audiovisual independente. Já a TV 3.0 posiciona a EBC como agente de inovação no sistema público de comunicação, conectando TV aberta, plataformas digitais e serviços públicos.",
+      "Essas entregas devem ser usadas para consolidar sua imagem como gestora capaz de combinar visão política, modernização tecnológica e fortalecimento da comunicação pública. Nas redes, onde ainda há ataques sobre suposto apadrinhamento político ou viés ideológico, a melhor resposta é reforçar resultados concretos e o papel estratégico da EBC para a sociedade.",
+      "Acompanhar os conteúdos abordados pela mídia ajuda a calibrar tendências que podem ser incorporadas à comunicação, prevendo eventuais crises que resvalem na comunicação pública, especialmente em um ano eleitoral."
+    ],
+    quotes:[], mid:null, after:[]
+  },
+  {
+    num:8, cat:"digital", color:"#EAF3DE", tc:"#27500A",
+    tag:"Digital · LinkedIn",
+    title:"8 - Aposte no LinkedIn como aliado digital",
+    body:[
+      "Dê atenção estratégica ao LinkedIn, com publicações técnicas, vídeos curtos e textos analíticos sobre comunicação pública, cultura, inovação, democracia e os rumos da EBC. Mantenha a biografia atualizada, consistente e robusta, já que a plataforma é uma das principais referências utilizadas por mecanismos de busca e ferramentas de IA para consolidar informações sobre perfis públicos. Sua trajetória desperta interesse, e há expectativa sobre sua visão, suas prioridades e o caminho que sua gestão pretende imprimir à EBC.",
+      "As redes sociais, há muito, deixaram de ser um instrumento de interação e se tornaram uma grande vitrine de entregas pessoais e institucionais. Segundo dados recentes do We Are Social/Meltwater, 88,1% da população brasileira está conectada às plataformas digitais, cujo uso diário supera 8 horas diárias.",
+      "Para além do seu engajamento que está num bom patamar (1,25%), é necessário incorporar fórmulas que comprovadamente funcionam."
+    ],
+    quotes:[], mid:null, after:[]
+  },
+  {
+    num:9, cat:"digital", color:"#EAF3DE", tc:"#27500A",
+    tag:"Digital · Facebook",
+    title:"9. Defina uma estratégia clara para o Facebook",
+    body:[
+      "Não manter o Facebook desatualizado. A presença na plataforma deve ser uma decisão: atualizar e manter com regularidade ou desativar temporariamente até que haja capacidade de gestão adequada.",
+      "Se a opção for manter o canal ativo, ele pode cumprir um papel relevante de alcance e comunidade, especialmente junto a públicos mais amplos e diversos. A plataforma permite dialogar com o Brasil profundo, com linguagem acessível, conteúdos humanizados, bastidores, prestação de serviço e temas de interesse cotidiano. O importante é evitar uma presença residual: ou o Facebook passa a integrar a sua estratégia de presença digital, com frequência e propósito, ou deve ser pausado de forma organizada."
+    ],
+    quotes:[], mid:null, after:[]
+  },
+  {
+    num:10, cat:"postura", color:"#E1F5EE", tc:"#085041",
+    tag:"Postura · Entrevistas",
+    title:"10 - Alimente um mapa mental de mensagens",
+    body:[
+      "Lembre-se sempre de que, na entrevista, você é a principal fonte do repórter. Antes de cada conversa, tenha clareza sobre a mensagem que deseja transmitir e sobre o ponto central que precisa ser compreendido pelo público. Para isso, construa um mapa mental com três ou quatro frases curtas, objetivas e de forte impacto, que possam ser retomadas naturalmente ao longo da entrevista. A meta é ajudar a orientar o enquadramento da conversa e, sempre que possível, contribuir para a construção da manchete."
+    ],
+    quotes:[], mid:null, after:[]
+  }
+];
+
+const opened = new Set();
+
+function buildBody(item) {
+  let h = '<div class="divider"></div>';
+  if (item.num === 2) {
+    h += item.body.map(p=>`<p>${p}</p>`).join('');
+    h += `<div class="quote">"${item.quotes[0]}"</div>`;
+    h += `<p style="margin-top:10px">${item.mid}</p>`;
+    h += `<div class="quote" style="margin-top:10px">"${item.quotes[1]}"</div>`;
+  } else {
+    h += item.body.map(p=>`<p>${p}</p>`).join('');
+    item.quotes.forEach(q => { h += `<div class="quote">"${q}"</div>`; });
+    item.after.forEach(p => { h += `<p style="margin-top:10px">${p}</p>`; });
+  }
+  return h;
+}
+
+function renderCards(cat) {
+  const wrap = document.getElementById('cards');
+  wrap.innerHTML = '';
+  const list = cat === 'all' ? data : data.filter(d => d.cat === cat);
+  list.forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'card' + (opened.has(item.num) ? ' open' : '');
+    el.dataset.id = item.num;
+    el.innerHTML = `
+      <div class="card-head" onclick="toggle(${item.num})">
+        <div class="card-num" style="background:${item.color};color:${item.tc}">${item.num}</div>
+        <div class="card-info">
+          <div class="card-title">${item.title}</div>
+          <div class="card-tag">${item.tag}</div>
+        </div>
+        <span class="chevron">&#8964;</span>
+      </div>
+      <div class="card-body">${buildBody(item)}</div>`;
+    wrap.appendChild(el);
+  });
+  updateProg();
+}
+
+function toggle(id) {
+  const el = document.querySelector(`.card[data-id="${id}"]`);
+  if (!el) return;
+  if (el.classList.contains('open')) { el.classList.remove('open'); opened.delete(id); }
+  else { el.classList.add('open'); opened.add(id); }
+  updateProg();
+}
+
+function filterCat(cat, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  renderCards(cat);
+}
+
+function updateProg() {
+  const pct = Math.round((opened.size / data.length) * 100);
+  document.getElementById('prog').style.width = pct + '%';
+  document.getElementById('pct').textContent = pct + '%';
+}
+
+renderCards('all');
+</script>
+</body>
+</html>
