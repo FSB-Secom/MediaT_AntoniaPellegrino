@@ -73,6 +73,10 @@ html, body {
   flex-shrink: 0;
 }
 
+@media (min-width: 768px) {
+  .s1-photo { display: none !important; }
+}
+
 .s1-body {
   flex: 1;
   background: var(--bg);
@@ -81,7 +85,7 @@ html, body {
 
 .tag {
   display: inline-block;
-  font-size: 10px;
+  font-size: 16px;
   font-weight: 600;
   letter-spacing: .07em;
   text-transform: uppercase;
@@ -93,7 +97,7 @@ html, body {
 }
 
 .s1-name {
-  font-size: 19px;
+  font-size: 22px;
   font-weight: 700;
   color: var(--text);
   margin-bottom: 3px;
@@ -101,14 +105,14 @@ html, body {
 }
 
 .s1-role {
-  font-size: 12px;
+  font-size: 15px;
   color: var(--blue);
   font-weight: 500;
   margin-bottom: 14px;
 }
 
 .prose {
-  font-size: 13.5px;
+  font-size: 16.5px;
   color: var(--text2);
   line-height: 1.75;
   margin-bottom: 10px;
@@ -163,13 +167,13 @@ html, body {
 }
 
 .s2-label {
-  font-size: 11px; font-weight: 700;
+  font-size: 17px; font-weight: 700;
   letter-spacing: .07em; text-transform: uppercase;
   color: var(--blue); margin-bottom: 14px;
 }
 
 .s2-text {
-  font-size: 19px; font-weight: 500;
+  font-size: 22px; font-weight: 500;
   color: var(--text); line-height: 1.55;
   margin-bottom: 2.25rem;
 }
@@ -177,7 +181,7 @@ html, body {
 .btn-primary {
   display: inline-flex; align-items: center; gap: 8px;
   background: var(--blue); color: #fff;
-  font-size: 14px; font-weight: 600; font-family: inherit;
+  font-size: 17px; font-weight: 600; font-family: inherit;
   padding: 13px 26px; border-radius: 99px; border: none;
   cursor: pointer;
   box-shadow: 0 4px 16px rgba(24,95,165,.3);
@@ -189,7 +193,7 @@ html, body {
 
 .btn-ghost {
   background: none; border: none;
-  font-size: 13px; color: var(--text2);
+  font-size: 16px; color: var(--text2);
   cursor: pointer; font-family: inherit;
   padding: 8px; margin-top: 4px;
   -webkit-tap-highlight-color: transparent;
@@ -233,7 +237,7 @@ html, body {
 }
 
 .prog-pct {
-  font-size: 11px; font-weight: 700;
+  font-size: 17px; font-weight: 700;
   color: var(--blue); min-width: 30px; text-align: right;
 }
 
@@ -248,7 +252,7 @@ html, body {
 
 .tab {
   flex-shrink: 0;
-  font-size: 12px; font-family: inherit;
+  font-size: 15px; font-family: inherit;
   padding: 5px 11px; border-radius: 99px;
   border: 0.5px solid var(--border);
   background: transparent; color: var(--text2);
@@ -287,20 +291,20 @@ html, body {
 .card-num {
   width: 32px; height: 32px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 700; flex-shrink: 0;
+  font-size: 16px; font-weight: 700; flex-shrink: 0;
 }
 
 .card-info { flex: 1; min-width: 0; }
 
 .card-title {
-  font-size: 14px; font-weight: 500;
+  font-size: 17px; font-weight: 500;
   color: var(--text); line-height: 1.35;
 }
 
-.card-tag { font-size: 11px; color: var(--text2); margin-top: 2px; }
+.card-tag { font-size: 17px; color: var(--text2); margin-top: 2px; }
 
 .chevron {
-  color: var(--text2); font-size: 18px; line-height: 1;
+  color: var(--text2); font-size: 21px; line-height: 1;
   flex-shrink: 0; transition: transform .2s;
 }
 .card.open .chevron { transform: rotate(180deg); }
@@ -311,7 +315,7 @@ html, body {
 .divider { height: .5px; background: var(--border); margin-bottom: 12px; }
 
 .card-body p {
-  font-size: 13px; color: var(--text2);
+  font-size: 16px; color: var(--text2);
   line-height: 1.72; margin-bottom: 10px;
 }
 .card-body p:last-child { margin-bottom: 0; }
@@ -322,7 +326,7 @@ html, body {
   border-radius: 0 var(--rm) var(--rm) 0;
   padding: 10px 12px;
   margin: 10px 0 0;
-  font-size: 12.5px; font-style: italic;
+  font-size: 15.5px; font-style: italic;
   color: var(--text); line-height: 1.65;
 }
 
@@ -336,7 +340,7 @@ html, body {
   padding: 13px 15px;
   display: flex; align-items: center; gap: 12px;
 }
-.footer-card p { font-size: 12px; color: var(--text2); line-height: 1.5; }
+.footer-card p { font-size: 15px; color: var(--text2); line-height: 1.5; }
 .footer-card a { color: var(--blue); text-decoration: none; }
 
 /* ── BOTÃO VOLTAR AO INÍCIO (tela 3) ── */
@@ -344,7 +348,7 @@ html, body {
   display: flex; align-items: center; gap: 6px;
   background: none; border: 0.5px solid var(--border);
   border-radius: 99px;
-  font-size: 12px; color: var(--text2); font-family: inherit;
+  font-size: 15px; color: var(--text2); font-family: inherit;
   padding: 7px 14px; cursor: pointer; margin: 0 1.25rem 1rem;
   flex-shrink: 0;
   -webkit-tap-highlight-color: transparent;
@@ -454,7 +458,7 @@ const data = [
   {
     num:1, cat:"discurso", color:"#E6F1FB", tc:"#0C447C",
     tag:"Argumentação · Orçamento",
-    title:"1- Incite a reflexão sobre o valor e o custo da EBC",
+    title:"Incite a reflexão sobre o valor e o custo da EBC",
     body:[
       "Diante de questionamentos sobre o orçamento destinado à empresa, mude a perspectiva trazendo a reflexão sobre qual seria o preço para o país de não ter uma estrutura pública de comunicação e cultura que chega a locais onde a mídia comercial não alcança.",
       "Aqui, aposte em destrinchar aquilo que você domina muito bem: o alcance e a relevância da EBC. Esta é uma empresa que leva informação aos rincões onde a mídia tradicional não vai, emprega diretamente cerca de 400 profissionais de comunicação e se empenha diariamente a alavancar o audiovisual brasileiro.",
@@ -466,7 +470,7 @@ const data = [
   {
     num:2, cat:"discurso", color:"#E6F1FB", tc:"#0C447C",
     tag:"Argumentação · Contratações",
-    title:"2 - Atuação de profissionais de mercado na EBC",
+    title:"Atuação de profissionais de mercado na EBC",
     body:[
       "Defenda a EBC como um player competitivo que disputa talentos e insumos na área de comunicação. O caráter público é evidenciado na legalidade e transparência de todas as contratações realizadas pela EBC.",
       "Se perguntada sobre o custo elevado das contratações de apresentadores, prefira posicionar a EBC no mercado da comunicação, como:"
@@ -481,19 +485,19 @@ const data = [
   {
     num:3, cat:"postura", color:"#E1F5EE", tc:"#085041",
     tag:"Presença · Linguagem corporal",
-    title:"3 - Postura e linguagem",
+    title:"Postura e linguagem",
     body:[
-      "Use o sorriso, o dinamismo das mãos e uma postura relaxada a seu favor. Elementos de leveza e simpatia transmitem o capital de serviço de uma liderança feminina moderna, gerando conexão imediata com o público.",
-      "Mantenha uma postura ereta e expresse com clareza e confiança. O rosto deve transmitir seriedade, engajamento e empatia. Quando houver um assunto mais leve, sorria, coloque adjetivos positivos para aproximar.",
-      "Diante de temas sensíveis ou provocações, use pausas estratégicas antes de iniciar suas respostas para controlar o ritmo da conversa, evitando que o dinamismo ou a pressa do repórter induzam a falas apressadas.",
-      "Democratize a informação e traduza conceitos abstratos ou técnicos em histórias simples e diretas sobre o papel da EBC. Evite minúcias orçamentárias ou explicações jurídicas complexas que dispersam a atenção do telespectador."
+      "😊 Use o sorriso, o dinamismo das mãos e uma postura relaxada a seu favor. Elementos de leveza e simpatia transmitem o capital de serviço de uma liderança feminina moderna, gerando conexão imediata com o público.",
+      "🎯 Mantenha uma postura ereta e expresse com clareza e confiança. O rosto deve transmitir seriedade, engajamento e empatia. Quando houver um assunto mais leve, sorria, coloque adjetivos positivos para aproximar.",
+      "⏸️ Diante de temas sensíveis ou provocações, use pausas estratégicas antes de iniciar suas respostas para controlar o ritmo da conversa, evitando que o dinamismo ou a pressa do repórter induzam a falas apressadas.",
+      "🗣️ Democratize a informação e traduza conceitos abstratos ou técnicos em histórias simples e diretas sobre o papel da EBC. Evite minúcias orçamentárias ou explicações jurídicas complexas que dispersam a atenção do telespectador."
     ],
     quotes:[], mid:null, after:[]
   },
   {
     num:4, cat:"discurso", color:"#E6F1FB", tc:"#0C447C",
     tag:"Argumentação · Gênero",
-    title:"4 - Levante a perspectiva de gênero",
+    title:"Levante a perspectiva de gênero",
     body:[
       "Neutralize provocações de cunho pessoal ou sobre indicações políticas, devolvendo uma reflexão elegante ao entrevistador, exaltando a legitimidade do seu próprio currículo e o espaço das mulheres no mercado de trabalho público ou privado.",
       "Uma parte da mídia sugeriu que a sua ascensão ao posto de presidente da EBC ocorreu em função de sua relação com a primeira-dama. Para evitar ruídos, aconselha-se não assumir uma postura reativa. Prefira argumentar utilizando um tema confortável para você, como a defesa do seu currículo e da ascensão das mulheres em ambientes de poder:"
@@ -505,7 +509,7 @@ const data = [
   {
     num:5, cat:"discurso", color:"#E6F1FB", tc:"#0C447C",
     tag:"Argumentação · Pautas",
-    title:"5 - Abrace as pautas de consenso",
+    title:"Abrace as pautas de consenso",
     body:[
       "Explore temas capazes de aproximar a sociedade para além da polarização ideológica. Defesa da infância, apoio às famílias, combate à violência contra a mulher, educação e acesso à informação são agendas de alto valor público e forte conexão social.",
       "Sempre que possível, relacione essas pautas ao serviço concreto que uma empresa pública de comunicação pode prestar à população. A EBC pode se posicionar como fonte útil e confiável em temas do cotidiano, como Enem, Fies, Prouni, Sisu, proteção de crianças e adolescentes no ambiente digital e orientação cidadã sobre políticas públicas."
@@ -515,7 +519,7 @@ const data = [
   {
     num:6, cat:"gestao", color:"#FAEEDA", tc:"#633806",
     tag:"Gestão · Resultados",
-    title:"6 - Use exemplos práticos de sucesso",
+    title:"Use exemplos práticos de sucesso",
     body:[
       "Valorize a sua trajetória no audiovisual e conecte essa experiência ao papel da EBC no fortalecimento da cultura brasileira. O bom momento do cinema nacional, com reconhecimento em premiações e maior visibilidade internacional, pode ser usado como exemplo da potência criativa do país e da importância de ampliar o acesso da população a esse conteúdo.",
       "A mensagem central deve ser que a EBC não substitui o mercado, mas pode atuar como indutora, parceira e plataforma de difusão da produção nacional, contribuindo para valorizar talentos brasileiros, fortalecer a economia criativa e distribuir cultura gratuitamente à sociedade."
@@ -525,30 +529,30 @@ const data = [
   {
     num:7, cat:"gestao", color:"#FAEEDA", tc:"#633806",
     tag:"Gestão · Reputação",
-    title:"7. Reforce a imagem reputacional a partir das entregas da gestão",
+    title:"Reforce a imagem reputacional a partir das entregas da gestão",
     body:[
-      "Desde sua chegada à presidência da EBC, a exposição da empresa na imprensa tem sido majoritariamente positiva, impulsionada principalmente por duas agendas: o lançamento do <strong>Tela Brasil</strong> e o protagonismo da EBC nos testes da <strong>TV 3.0</strong>.",
+      "Desde sua chegada à presidência da EBC, a exposição da empresa na imprensa tem sido majoritariamente positiva, impulsionada principalmente por duas agendas: o lançamento do <strong>Tela Brasil</strong> e o protagonismo da EBC nos testes da <strong>TV 3.0</strong>. <a href='https://drive.google.com/file/d/1Eae1uXjiOq22rRGZsLEChTA0BqXtqiTL/view?usp=sharing' target='_blank' style='color:#185FA5'>Conheça aqui os dados coletados neste período.</a>",
       "O Tela Brasil reforça a associação da empresa com acesso gratuito à produção nacional, valorização da cultura brasileira e fortalecimento do audiovisual independente. Já a TV 3.0 posiciona a EBC como agente de inovação no sistema público de comunicação, conectando TV aberta, plataformas digitais e serviços públicos.",
       "Essas entregas devem ser usadas para consolidar sua imagem como gestora capaz de combinar visão política, modernização tecnológica e fortalecimento da comunicação pública. Nas redes, onde ainda há ataques sobre suposto apadrinhamento político ou viés ideológico, a melhor resposta é reforçar resultados concretos e o papel estratégico da EBC para a sociedade.",
-      "Acompanhar os conteúdos abordados pela mídia ajuda a calibrar tendências que podem ser incorporadas à comunicação, prevendo eventuais crises que resvalem na comunicação pública, especialmente em um ano eleitoral."
+      "Acompanhar os conteúdos abordados pela mídia ajuda a calibrar tendências que podem ser incorporadas à comunicação, prevendo eventuais crises que resvalem na comunicação pública, especialmente em um ano eleitoral. <a href='https://drive.google.com/file/d/1SQx-WeBBJAPhVkBDLp1wRcxyfPWWGds4/view?usp=sharing' target='_blank' style='color:#185FA5'>Esta apresentação menciona alguns temas de destaque para o período.</a>"
     ],
     quotes:[], mid:null, after:[]
   },
   {
     num:8, cat:"digital", color:"#EAF3DE", tc:"#27500A",
     tag:"Digital · LinkedIn",
-    title:"8 - Aposte no LinkedIn como aliado digital",
+    title:"Aposte no LinkedIn como aliado digital",
     body:[
       "Dê atenção estratégica ao LinkedIn, com publicações técnicas, vídeos curtos e textos analíticos sobre comunicação pública, cultura, inovação, democracia e os rumos da EBC. Mantenha a biografia atualizada, consistente e robusta, já que a plataforma é uma das principais referências utilizadas por mecanismos de busca e ferramentas de IA para consolidar informações sobre perfis públicos. Sua trajetória desperta interesse, e há expectativa sobre sua visão, suas prioridades e o caminho que sua gestão pretende imprimir à EBC.",
       "As redes sociais, há muito, deixaram de ser um instrumento de interação e se tornaram uma grande vitrine de entregas pessoais e institucionais. Segundo dados recentes do We Are Social/Meltwater, 88,1% da população brasileira está conectada às plataformas digitais, cujo uso diário supera 8 horas diárias.",
-      "Para além do seu engajamento que está num bom patamar (1,25%), é necessário incorporar fórmulas que comprovadamente funcionam."
+      "Para além do seu engajamento que está num bom patamar (1,25%), é necessário incorporar fórmulas que comprovadamente funcionam. <a href='https://drive.google.com/file/d/1BNxBTeZKiJQGklMaXNI2BiwA0a2BEV_W/view?usp=sharing' target='_blank' style='color:#185FA5'>Você pode revisitar o material aqui.</a>"
     ],
     quotes:[], mid:null, after:[]
   },
   {
     num:9, cat:"digital", color:"#EAF3DE", tc:"#27500A",
     tag:"Digital · Facebook",
-    title:"9. Defina uma estratégia clara para o Facebook",
+    title:"Defina uma estratégia clara para o Facebook",
     body:[
       "Não manter o Facebook desatualizado. A presença na plataforma deve ser uma decisão: atualizar e manter com regularidade ou desativar temporariamente até que haja capacidade de gestão adequada.",
       "Se a opção for manter o canal ativo, ele pode cumprir um papel relevante de alcance e comunidade, especialmente junto a públicos mais amplos e diversos. A plataforma permite dialogar com o Brasil profundo, com linguagem acessível, conteúdos humanizados, bastidores, prestação de serviço e temas de interesse cotidiano. O importante é evitar uma presença residual: ou o Facebook passa a integrar a sua estratégia de presença digital, com frequência e propósito, ou deve ser pausado de forma organizada."
@@ -558,7 +562,7 @@ const data = [
   {
     num:10, cat:"postura", color:"#E1F5EE", tc:"#085041",
     tag:"Postura · Entrevistas",
-    title:"10 - Alimente um mapa mental de mensagens",
+    title:"Alimente um mapa mental de mensagens",
     body:[
       "Lembre-se sempre de que, na entrevista, você é a principal fonte do repórter. Antes de cada conversa, tenha clareza sobre a mensagem que deseja transmitir e sobre o ponto central que precisa ser compreendido pelo público. Para isso, construa um mapa mental com três ou quatro frases curtas, objetivas e de forte impacto, que possam ser retomadas naturalmente ao longo da entrevista. A meta é ajudar a orientar o enquadramento da conversa e, sempre que possível, contribuir para a construção da manchete."
     ],
